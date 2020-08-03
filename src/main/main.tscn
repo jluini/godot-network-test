@@ -1,0 +1,159 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://tools/networking/network_manager.gd" type="Script" id=1]
+[ext_resource path="res://main/main.gd" type="Script" id=2]
+[ext_resource path="res://tools/logging/screen_logger.tscn" type="PackedScene" id=3]
+[ext_resource path="res://tools/ui/changing_view.gd" type="Script" id=4]
+
+[node name="main" type="Node"]
+script = ExtResource( 2 )
+
+[node name="ui" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="main_screen" type="Control" parent="ui"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -300.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="views" type="Control" parent="ui/main_screen"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = -100.0
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="menu_view" type="Control" parent="ui/main_screen/views"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="title" type="Label" parent="ui/main_screen/views/menu_view"]
+anchor_right = 1.0
+margin_bottom = 100.0
+text = "MAIN"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="menu" type="Control" parent="ui/main_screen/views/menu_view"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 100.0
+
+[node name="v_box_container" type="VBoxContainer" parent="ui/main_screen/views/menu_view/menu"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="peer_form" type="Control" parent="ui/main_screen/views/menu_view/menu/v_box_container"]
+margin_right = 724.0
+margin_bottom = 60.0
+rect_min_size = Vector2( 0, 60 )
+
+[node name="name_label" type="Label" parent="ui/main_screen/views/menu_view/menu/v_box_container/peer_form"]
+anchor_bottom = 1.0
+text = "Peer name:"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="name_field" type="TextEdit" parent="ui/main_screen/views/menu_view/menu/v_box_container/peer_form"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 100.0
+text = "Peer name"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="create_server" type="Button" parent="ui/main_screen/views/menu_view/menu/v_box_container"]
+margin_top = 64.0
+margin_right = 724.0
+margin_bottom = 84.0
+text = "Create server"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="connect_to_server" type="Button" parent="ui/main_screen/views/menu_view/menu/v_box_container"]
+margin_top = 88.0
+margin_right = 724.0
+margin_bottom = 108.0
+text = "Connect as client"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="lobby_view" type="Control" parent="ui/main_screen/views"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="title" type="Label" parent="ui/main_screen/views/lobby_view"]
+anchor_right = 1.0
+margin_bottom = 100.0
+text = "LOBBY"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="wait_bar" type="Control" parent="ui/main_screen"]
+visible = false
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -100.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="spinner" type="Label" parent="ui/main_screen/wait_bar"]
+margin_left = 328.777
+margin_top = 32.1022
+margin_right = 374.777
+margin_bottom = 46.1022
+text = "WAIT..."
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="cancel_button" type="Button" parent="ui/main_screen/wait_bar"]
+margin_left = 434.351
+margin_top = 14.4045
+margin_right = 627.351
+margin_bottom = 61.4045
+text = "Cancel"
+
+[node name="side_bar" type="Control" parent="ui"]
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -300.0
+
+[node name="screen_logger" parent="ui/side_bar" instance=ExtResource( 3 )]
+
+[node name="network_manager" type="Node" parent="."]
+script = ExtResource( 1 )
+[connection signal="pressed" from="ui/main_screen/views/menu_view/menu/v_box_container/create_server" to="." method="_on_create_server_pressed"]
+[connection signal="pressed" from="ui/main_screen/views/menu_view/menu/v_box_container/connect_to_server" to="." method="_on_connect_to_server_pressed"]
+[connection signal="pressed" from="ui/main_screen/wait_bar/cancel_button" to="." method="_on_cancel_button_pressed"]
